@@ -12,20 +12,20 @@ class NetworkViewModel:ObservableObject {
     @Published var userInfo: [UserInfoModel] = []
     @Published var login: String = ""
     @Published var avatarURL: String = ""
-    @Published var name: JSONNull? = nil
-    @Published var company: JSONNull? = nil
-    @Published var blog: String = ""
-    @Published var location: JSONNull? = nil
-    @Published var email: JSONNull? = nil
-    @Published var hireable: JSONNull? = nil
-    @Published var twitterUsername: JSONNull? = nil
+    @Published var name: String? = nil
+    @Published var company: String? = nil
+    @Published var blog: String? = nil
+    @Published var location: String? = nil
+    @Published var email: String? = nil
     @Published var publicRepos: Int = 0
-    @Published var publicGists: Int = 0
     @Published var followers: Int = 0
     @Published var following: Int = 0
-    @Published var createdAt: Date = Date()
     @Published var updatedAt: Date = Date()
 
+//    @Published var hireable: String? = nil
+//    @Published var twitterUsername: String? = nil
+//    @Published var publicGists: Int = 0
+//    @Published var createdAt: Date = Date()
     //    let id: Int
     //    let nodeID: String
     //    let gravatarID: String
@@ -67,9 +67,23 @@ class NetworkViewModel:ObservableObject {
                 let infoData = try decoder.decode(UserInfoModel.self, from: data)
                 
                 DispatchQueue.main.async {
-                    self.login = infoData.login
+                    self.login = login
+                    self.avatarURL = infoData.avatarURL
                     self.name = infoData.name
                     self.company = infoData.company
+                    self.blog = infoData.blog
+                    self.location = infoData.location
+                    self.email = infoData.email
+                    self.publicRepos = infoData.publicRepos
+                    self.followers = infoData.followers
+                    self.following = infoData.following
+                    self.updatedAt = infoData.updatedAt
+                    
+//                    self.hireable = infoData.hireable
+//                    self.twitterUsername = infoData.twitterUsername
+//                    self.publicGists = infoData.publicGists
+//                    self.createdAt = infoData.createdAt
+                    
                     completion(true) // 성공 시 클로저 호출
                 }
             }   catch {
