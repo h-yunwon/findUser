@@ -12,7 +12,7 @@ struct UserInfoModel: Codable {
     let id: Int
     let nodeID: String
     let avatarURL: String
-    let gravatarID: String
+    let gravatarID: String?
     let url, htmlURL, followersURL: String
     let followingURL, gistsURL, starredURL: String
     let subscriptionsURL, organizationsURL, reposURL: String
@@ -20,10 +20,9 @@ struct UserInfoModel: Codable {
     let receivedEventsURL: String
     let type: String
     let siteAdmin: Bool
-    let name, company: JSONNull?
-    let blog: String
-    let location, email, hireable, bio: JSONNull?
-    let twitterUsername: JSONNull?
+    let name, company, blog: String?
+    let location, email, hireable, bio: String?
+    let twitterUsername: String?
     let publicRepos, publicGists, followers, following: Int
     let createdAt, updatedAt: Date
 
@@ -52,33 +51,5 @@ struct UserInfoModel: Codable {
         case followers, following
         case createdAt = "created_at"
         case updatedAt = "updated_at"
-    }
-}
-
-// MARK: - Encode/decode helpers
-
-class JSONNull: Codable, Hashable {
-
-    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
-        return true
-    }
-
-    func hash(into hasher: inout Hasher) {
-        // JSONNull은 항상 동일하다고 간주하고, 0으로 설정하여 모든 인스턴스를 동등하다고 취급합니다.
-        hasher.combine(0)
-    }
-    
-    public init() {}
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if !container.decodeNil() {
-            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encodeNil()
     }
 }
