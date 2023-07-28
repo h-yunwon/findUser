@@ -9,15 +9,18 @@ import SwiftUI
 
 struct SearchBarView: View {
     // MARK: - PROPERTY
+    @ObservedObject private var networkVM:NetworkViewModel = NetworkViewModel()
     @Binding var searchText: String
     @Binding var showProfile: Bool
+//    @State private var isFormValid = false
+    
     // MARK: BODY
     var body: some View {
         HStack {
             TextField("Enter Github User",
                       text: $searchText,
                       onEditingChanged: { isEditing in
-//                isFormValid = !searchSummonerName.isEmpty
+//                isFormValid = !searchText.isEmpty
             })
                 .font(.headline)
                 .foregroundColor(Color("ColorSearchBar"))
@@ -26,8 +29,9 @@ struct SearchBarView: View {
             Spacer()
             
             Button(action: {
-                searchText = ""
-                showProfile = true
+                networkVM.fetchUserInfo(login: searchText) { success in
+                    showProfile = success
+                }
             }) {
                 Image(systemName: "magnifyingglass")
                     .font(.headline)

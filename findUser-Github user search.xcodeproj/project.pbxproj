@@ -15,6 +15,8 @@
 		5FA4EE772A5E690C005489E7 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4EE762A5E690C005489E7 /* HeaderView.swift */; };
 		5FA4EE792A5E777A005489E7 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4EE782A5E777A005489E7 /* UserInfoView.swift */; };
 		5FA4EE7B2A666E0D005489E7 /* UserInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4EE7A2A666E0D005489E7 /* UserInfoHeaderView.swift */; };
+		5FA4EE7E2A726B7A005489E7 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4EE7D2A726B7A005489E7 /* NetworkViewModel.swift */; };
+		5FA4EE812A726C03005489E7 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA4EE802A726C03005489E7 /* UserInfoModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		5FA4EE762A5E690C005489E7 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		5FA4EE782A5E777A005489E7 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		5FA4EE7A2A666E0D005489E7 /* UserInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoHeaderView.swift; sourceTree = "<group>"; };
+		5FA4EE7D2A726B7A005489E7 /* NetworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
+		5FA4EE802A726C03005489E7 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 		5FA4EE642A5E4EE7005489E7 /* findUser-Github user search */ = {
 			isa = PBXGroup;
 			children = (
+				5FA4EE7F2A726BDC005489E7 /* Model */,
+				5FA4EE7C2A726B4A005489E7 /* ViewModel */,
 				5FA4EE652A5E4EE7005489E7 /* findUser_Github_user_searchApp.swift */,
 				5FA4EE732A5E644A005489E7 /* View */,
 				5FA4EE692A5E4EE8005489E7 /* Assets.xcassets */,
@@ -85,6 +91,22 @@
 				5FA4EE7A2A666E0D005489E7 /* UserInfoHeaderView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		5FA4EE7C2A726B4A005489E7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5FA4EE7D2A726B7A005489E7 /* NetworkViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5FA4EE7F2A726BDC005489E7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5FA4EE802A726C03005489E7 /* UserInfoModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,9 +181,11 @@
 			files = (
 				5FA4EE682A5E4EE7005489E7 /* ContentView.swift in Sources */,
 				5FA4EE752A5E67E1005489E7 /* SearchBarView.swift in Sources */,
+				5FA4EE812A726C03005489E7 /* UserInfoModel.swift in Sources */,
 				5FA4EE7B2A666E0D005489E7 /* UserInfoHeaderView.swift in Sources */,
 				5FA4EE662A5E4EE7005489E7 /* findUser_Github_user_searchApp.swift in Sources */,
 				5FA4EE772A5E690C005489E7 /* HeaderView.swift in Sources */,
+				5FA4EE7E2A726B7A005489E7 /* NetworkViewModel.swift in Sources */,
 				5FA4EE792A5E777A005489E7 /* UserInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,9 +329,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Yunwon.findUser-Github-user-search";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -333,9 +360,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Yunwon.findUser-Github-user-search";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

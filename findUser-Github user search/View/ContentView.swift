@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     // MARK: - PROPERTY
+    
     @State private var searchText = ""
     @State private var showProfile = false
     @State private var selectedNodeID = ""
