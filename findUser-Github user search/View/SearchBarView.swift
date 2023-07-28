@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchBarView: View {
     // MARK: - PROPERTY
-    @ObservedObject private var networkVM:NetworkViewModel = NetworkViewModel()
+    @ObservedObject var networkVM: NetworkViewModel
     @Binding var searchText: String
     @Binding var showProfile: Bool
 //    @State private var isFormValid = false
@@ -48,9 +48,10 @@ struct SearchBarView: View {
 }
 
 struct SearchBarView_Previews: PreviewProvider {
+    @ObservedObject static private var networkVM: NetworkViewModel = NetworkViewModel()
     @State static private var searchText:String = ""
     @State static private var showProfile:Bool = false
     static var previews: some View {
-        SearchBarView(searchText: $searchText, showProfile: $showProfile)
+        SearchBarView(networkVM: networkVM, searchText: $searchText, showProfile: $showProfile)
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     // MARK: - PROPERTY
-    
+    @ObservedObject private var networkVM: NetworkViewModel = NetworkViewModel()
     @State private var searchText = ""
     @State private var showProfile = false
     @State private var selectedNodeID = ""
@@ -19,9 +19,9 @@ struct ContentView: View {
         NavigationStack {
             VStack(spacing: 20) {
                 HeaderView()
-                SearchBarView(searchText: $searchText, showProfile: $showProfile)
+                SearchBarView(networkVM: networkVM, searchText: $searchText, showProfile: $showProfile)
                 NavigationLink(
-                    destination: UserInfoView(nodeId: selectedNodeID),
+                    destination: UserInfoView(networkVM: networkVM),
                     isActive: $showProfile
                 ) {
                     EmptyView()

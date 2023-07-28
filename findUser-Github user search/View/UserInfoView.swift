@@ -8,22 +8,32 @@
 import SwiftUI
 
 struct UserInfoView: View {
+    
     // MARK: - PROPERTY
-    var nodeId:String
+    @ObservedObject var networkVM: NetworkViewModel
+    
+    // MARK: - FUNCTION
+    func safeDisplay(_ text: String?, fallback: String) -> Text {
+        if let unwrappedText = text {
+            return Text(unwrappedText)
+        } else {
+            return Text(fallback)
+        }
+    }
     
     // MARK: - BODY
     var body: some View {
         VStack(spacing: 10) {
-            UserInfoHeaderView()
+            UserInfoHeaderView(userLogin: networkVM.login, userName: networkVM.name, userLocation: networkVM.location)
             
             Group {
-                // "bio"
+
                 HStack(alignment: .center, spacing: 20) {
                     VStack(spacing: 5) {
                         
-                        Text("Repository") //"public_repos"
+                        Text("Repository")
                             .foregroundColor(Color("ReflectAccentColor"))
-                        Text("14")
+                        Text("\(networkVM.publicRepos)")
                     }
                     
                     Divider()
@@ -31,9 +41,9 @@ struct UserInfoView: View {
                         .background(Color("AccentColor"))
                     
                     VStack {
-                        Text("Followers") //"followers"
+                        Text("Followers")
                             .foregroundColor(Color("ReflectAccentColor"))
-                        Text("200")
+                        Text("\(networkVM.followers)")
                     }
                     
                     Divider()
@@ -41,9 +51,9 @@ struct UserInfoView: View {
                         .background(Color("AccentColor"))
                     
                     VStack {
-                        Text("Following") //"following"
+                        Text("Following")
                             .foregroundColor(Color("ReflectAccentColor"))
-                        Text("17")
+                        Text("\(networkVM.following)")
                     }
                 }
             }
@@ -54,19 +64,21 @@ struct UserInfoView: View {
                 HStack {
                     Image(systemName: "envelope.fill")
                         .foregroundColor(.accentColor)
-                    Text("email")
+                    safeDisplay(networkVM.email, fallback: "No Email")
                 }
                 
                 HStack {
                     Image(systemName: "bubble.middle.bottom.fill")
                         .foregroundColor(.accentColor)
-                    Text("blog")
+                    
+                    safeDisplay(networkVM.blog, fallback: "No Blog")
                 }
 
                 HStack {
                     Image(systemName: "bag.fill")
                         .foregroundColor(.accentColor)
-                    Text("company")
+                    
+                    safeDisplay(networkVM.company, fallback: "No Company")
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -82,29 +94,34 @@ struct UserInfoView: View {
                     .cornerRadius(17)
             }
             .padding()
-            Spacer()
             
-            Group {
-                HStack {
-                    Text("2022-01-02T06:03:52Z") //"created_at"
-                        .foregroundColor(Color("ReflectAccentColor"))
-                        .font(.caption)
-                    
-                    Spacer()
-                    
-                    Text("2022-01-02T06:03:52Z") //"updated_at":
-                        .foregroundColor(Color("ReflectAccentColor"))
-                        .font(.caption)
-                }
-            }
-            .padding(.horizontal, 30)
+            Text("\(networkVM.updatedAt.formatted(date: .abbreviated, time: .shortened))")
+                .foregroundColor(Color("ReflectAccentColor"))
+                .font(.caption)
         } //:VSTACK
     } //:BODY
 }
 
+// MARK: - VIEW
+struct RowView: View {
+    let title: String
+    let value: Int
+
+    var body: some View {
+        VStack(spacing: 5) {
+            Text(title)
+                .foregroundColor(Color("ReflectAccentColor"))
+            Text("\(value)")
+        }
+    }
+}
+
+
+// MARK: - PREVIEW
 struct UserInfoView_Previews: PreviewProvider {
+    @ObservedObject static private var networkVM: NetworkViewModel = NetworkViewModel()
     static var nodeId:String = ""
     static var previews: some View {
-        UserInfoView(nodeId: nodeId)
+        UserInfoView(networkVM: networkVM)
     }
 }

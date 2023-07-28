@@ -14,19 +14,36 @@
 import SwiftUI
 
 struct UserInfoHeaderView: View {
+    
+    // MARK: - PROPERTY
+    var userLogin: String = ""
+    var userName: String? = nil
+    var userLocation: String? = nil
+    
+    // MARK: - PROPERTY
+    func safeDisplay(_ text: String?, fallback: String) -> Text {
+        if let unwrappedText = text {
+            return Text(unwrappedText)
+        } else {
+            return Text(fallback)
+        }
+    }
+    
+    // MARK: - BODY
     var body: some View {
         
         VStack(alignment: .center, spacing: 10) {
             
-            Text("name")
+            Text("\(userLogin)")
                 .font(.title)
                 .fontWeight(.bold)
-            Text("node_id")
+            
+            safeDisplay(userName, fallback: "")
                 .font(.title3)
             HStack {
                 Image(systemName: "location.fill")
                     .foregroundColor(Color("ReflectAccentColor"))
-                Text("location")
+                safeDisplay(userLocation, fallback: "")
                     .font(.title3)
             }
             Image(systemName: "person.crop.circle.fill")
@@ -45,6 +62,6 @@ struct UserInfoHeaderView: View {
 
 struct UserInfoHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        UserInfoHeaderView()
+        UserInfoHeaderView(userLogin: "", userName: nil, userLocation: nil)
     }
 }
