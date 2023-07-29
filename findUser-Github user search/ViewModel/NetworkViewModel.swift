@@ -11,7 +11,7 @@ class NetworkViewModel:ObservableObject {
     
     @Published var userInfo: [UserInfoModel] = []
     @Published var login: String = ""
-    @Published var avatarURL: String = ""
+    @Published var imageData: Data? = nil
     @Published var name: String? = nil
     @Published var company: String? = nil
     @Published var blog: String? = nil
@@ -65,26 +65,30 @@ class NetworkViewModel:ObservableObject {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
                 let infoData = try decoder.decode(UserInfoModel.self, from: data)
-                
-                DispatchQueue.main.async {
-                    self.login = login
-                    self.avatarURL = infoData.avatarURL
-                    self.name = infoData.name
-                    self.company = infoData.company
-                    self.blog = infoData.blog
-                    self.location = infoData.location
-                    self.email = infoData.email
-                    self.publicRepos = infoData.publicRepos
-                    self.followers = infoData.followers
-                    self.following = infoData.following
-                    self.updatedAt = infoData.updatedAt
+        
+                if let imageUrl = URL(string: infoData.avatarURL),
+                   let imageData = try? Data(contentsOf: imageUrl) {
                     
-//                    self.hireable = infoData.hireable
-//                    self.twitterUsername = infoData.twitterUsername
-//                    self.publicGists = infoData.publicGists
-//                    self.createdAt = infoData.createdAt
-                    
-                    completion(true) // 성공 시 클로저 호출
+                    DispatchQueue.main.async {
+                        self.login = login
+                        self.imageData = imageData
+                        self.name = infoData.name
+                        self.company = infoData.company
+                        self.blog = infoData.blog
+                        self.location = infoData.location
+                        self.email = infoData.email
+                        self.publicRepos = infoData.publicRepos
+                        self.followers = infoData.followers
+                        self.following = infoData.following
+                        self.updatedAt = infoData.updatedAt
+                        
+    //                    self.hireable = infoData.hireable
+    //                    self.twitterUsername = infoData.twitterUsername
+    //                    self.publicGists = infoData.publicGists
+    //                    self.createdAt = infoData.createdAt
+                        
+                        completion(true) // 성공 시 클로저 호출
+                    }
                 }
             }   catch {
                 print("fetchUserInfo - Error decoding JSON: \(error.localizedDescription)")
@@ -93,3 +97,10 @@ class NetworkViewModel:ObservableObject {
         }.resume()
     }
 }
+
+
+
+
+
+
+

@@ -19,6 +19,7 @@ struct UserInfoHeaderView: View {
     var userLogin: String = ""
     var userName: String? = nil
     var userLocation: String? = nil
+    var userImageData: Data? = nil
     
     // MARK: - PROPERTY
     func safeDisplay(_ text: String?, fallback: String) -> Text {
@@ -46,17 +47,33 @@ struct UserInfoHeaderView: View {
                 safeDisplay(userLocation, fallback: "")
                     .font(.title3)
             }
-            Image(systemName: "person.crop.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .overlay {
-                    Circle().stroke(.white, lineWidth: 4)
-                }
-                .shadow(radius: 6)
-                .padding()
+            
+            if let imageData = userImageData,
+               let image = UIImage(data: imageData) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .overlay {
+                        Circle().stroke(.white, lineWidth: 4)
+                    }
+                    .shadow(radius: 6)
+                    .padding()
+                    .frame(maxHeight: .infinity)
+                
+            } else {
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .overlay {
+                        Circle().stroke(.white, lineWidth: 4)
+                    }
+                    .shadow(radius: 6)
+                    .padding()
+                    .frame(maxHeight: .infinity)
+            }
         }
-        .frame(maxHeight: .infinity)
     }
 }
 
