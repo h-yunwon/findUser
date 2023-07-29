@@ -38,11 +38,34 @@ struct UserInfoView: View {
             .padding()
             
             Group {
-                infoListView(imageSystemName: "envelope.fill", text: networkVM.email, fallback: "No Email")
+                HStack {
+                    Image(systemName: "envelope")
+                        .foregroundColor(.accentColor)
+                    
+                    if let unwrappedEmail = networkVM.email {
+                        Text(unwrappedEmail)
+                            .onTapGesture {
+                                UIPasteboard.general.string = unwrappedEmail
+                            }
+                    } else {
+                        Text("No Email")
+                    }
+                }
                 
-                infoListView(imageSystemName: "bubble.middle.bottom.fill", text: networkVM.blog, fallback: "No Blog")
+                HStack {
+                    Image(systemName: "link")
+                        .foregroundColor(.accentColor)
+                    
+                    if let unwrappedBlog = networkVM.blog {
+                        Link(destination: URL(string: "https://"+unwrappedBlog)!) {
+                            Text("\(unwrappedBlog)")
+                        }
+                    } else {
+                        Text("No Blog")
+                    }
+                }
                 
-                infoListView(imageSystemName: "bag.fill", text: networkVM.company, fallback: "No Company")
+                infoListView(imageSystemName: "bag", text: networkVM.company, fallback: "No Company")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 30)
