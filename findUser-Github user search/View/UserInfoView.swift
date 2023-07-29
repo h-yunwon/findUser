@@ -12,74 +12,37 @@ struct UserInfoView: View {
     // MARK: - PROPERTY
     @ObservedObject var networkVM: NetworkViewModel
     
-    // MARK: - FUNCTION
-    func safeDisplay(_ text: String?, fallback: String) -> Text {
-        if let unwrappedText = text {
-            return Text(unwrappedText)
-        } else {
-            return Text(fallback)
-        }
-    }
-    
     // MARK: - BODY
     var body: some View {
         VStack(spacing: 10) {
-            UserInfoHeaderView(userLogin: networkVM.login, userName: networkVM.name, userLocation: networkVM.location)
+            UserInfoHeaderView(userLogin: networkVM.login, userName: networkVM.name, userLocation: networkVM.location, userImageData: networkVM.imageData)
             
             Group {
-
                 HStack(alignment: .center, spacing: 20) {
-                    VStack(spacing: 5) {
-                        
-                        Text("Repository")
-                            .foregroundColor(Color("ReflectAccentColor"))
-                        Text("\(networkVM.publicRepos)")
-                    }
+                    RowView(title: "Repository", value: networkVM.publicRepos)
+                    
+                    Divider()
+                        .frame(height: 40)
+                        .background(Color("AccentColor"))
+            
+                    RowView(title: "Followers", value: networkVM.followers)
                     
                     Divider()
                         .frame(height: 40)
                         .background(Color("AccentColor"))
                     
-                    VStack {
-                        Text("Followers")
-                            .foregroundColor(Color("ReflectAccentColor"))
-                        Text("\(networkVM.followers)")
-                    }
-                    
-                    Divider()
-                        .frame(height: 40)
-                        .background(Color("AccentColor"))
-                    
-                    VStack {
-                        Text("Following")
-                            .foregroundColor(Color("ReflectAccentColor"))
-                        Text("\(networkVM.following)")
-                    }
+                    RowView(title: "Following", value: networkVM.following)
                 }
             }
             .frame(maxWidth: .infinity)
             .padding()
             
             Group {
-                HStack {
-                    Image(systemName: "envelope.fill")
-                        .foregroundColor(.accentColor)
-                    safeDisplay(networkVM.email, fallback: "No Email")
-                }
+                infoListView(imageSystemName: "envelope.fill", text: networkVM.email, fallback: "No Email")
                 
-                HStack {
-                    Image(systemName: "bubble.middle.bottom.fill")
-                        .foregroundColor(.accentColor)
-                    
-                    safeDisplay(networkVM.blog, fallback: "No Blog")
-                }
-
-                HStack {
-                    Image(systemName: "bag.fill")
-                        .foregroundColor(.accentColor)
-                    
-                    safeDisplay(networkVM.company, fallback: "No Company")
-                }
+                infoListView(imageSystemName: "bubble.middle.bottom.fill", text: networkVM.blog, fallback: "No Blog")
+                
+                infoListView(imageSystemName: "bag.fill", text: networkVM.company, fallback: "No Company")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 30)
@@ -116,6 +79,24 @@ struct RowView: View {
     }
 }
 
+struct infoListView: View {
+    let imageSystemName: String
+    let text: String?
+    let fallback: String
+    
+    var body: some View {
+        HStack {
+            Image(systemName: imageSystemName)
+                .foregroundColor(.accentColor)
+            
+            if let unwrappedText = text {
+                Text(unwrappedText)
+            } else {
+                Text(fallback)
+            }
+        }
+    }
+}
 
 // MARK: - PREVIEW
 struct UserInfoView_Previews: PreviewProvider {
