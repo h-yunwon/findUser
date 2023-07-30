@@ -21,12 +21,22 @@ struct UserInfoHeaderView: View {
     var userLocation: String? = nil
     var userImageData: Data? = nil
     
-    // MARK: - PROPERTY
-    func safeDisplay(_ text: String?, fallback: String) -> Text {
+    // MARK: - FUNCTION
+    func safeDisplay(_ text: String?) -> Text? {
         if let unwrappedText = text {
             return Text(unwrappedText)
+        }
+        
+        return nil
+    }
+    
+    func displayUserImage(_ userImageData: Data?) -> Image {
+        if let imageData = userImageData,
+           let image = UIImage(data: imageData) {
+            return Image(uiImage: image)
+            
         } else {
-            return Text(fallback)
+            return Image(systemName: "person.crop.circle.fill")
         }
     }
     
@@ -39,44 +49,33 @@ struct UserInfoHeaderView: View {
                 .font(.title)
                 .fontWeight(.bold)
             
-            safeDisplay(userName, fallback: "")
+            safeDisplay(userName)
                 .font(.title3)
+            
             HStack {
                 Image(systemName: "location.fill")
                     .foregroundColor(Color("ReflectAccentColor"))
-                safeDisplay(userLocation, fallback: "")
+                safeDisplay(userLocation)
                     .font(.title3)
-            }
+            }//: HSTACK
             
-            if let imageData = userImageData,
-               let image = UIImage(data: imageData) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .overlay {
-                        Circle().stroke(.white, lineWidth: 4)
-                    }
-                    .shadow(radius: 6)
-                    .padding()
-                    .frame(maxHeight: .infinity)
-                
-            } else {
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .overlay {
-                        Circle().stroke(.white, lineWidth: 4)
-                    }
-                    .shadow(radius: 6)
-                    .padding()
-                    .frame(maxHeight: .infinity)
-            }
-        }
-    }
+            displayUserImage(userImageData)
+                .resizable()
+                .scaledToFit()
+                .clipShape(Circle())
+                .overlay {
+                    Circle().stroke(.white, lineWidth: 4)
+                }
+                .shadow(radius: 6)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 60)
+                .padding(.top, 20)
+            
+        }//: VSTACK
+    }//: BODY
 }
 
+// MARK: - PREVIEW
 struct UserInfoHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         UserInfoHeaderView(userLogin: "", userName: nil, userLocation: nil)

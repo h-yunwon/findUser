@@ -21,6 +21,7 @@ class NetworkViewModel:ObservableObject {
     @Published var followers: Int = 0
     @Published var following: Int = 0
     @Published var updatedAt: Date = Date()
+    @Published var bio: String? = nil
 
 //    @Published var hireable: String? = nil
 //    @Published var twitterUsername: String? = nil
@@ -36,7 +37,6 @@ class NetworkViewModel:ObservableObject {
     //    let receivedEventsURL: String
     //    let type: String
     //    let siteAdmin: Bool
-    //    let bio: JSONNull?
 
     // 클로저를 파라미터로 갖는 fetchUserInfo 메서드 정의
     func fetchUserInfo(login: String, completion: @escaping (Bool) -> Void) {
@@ -81,7 +81,7 @@ class NetworkViewModel:ObservableObject {
                         self.followers = infoData.followers
                         self.following = infoData.following
                         self.updatedAt = infoData.updatedAt
-                        
+                        self.bio = infoData.bio
     //                    self.hireable = infoData.hireable
     //                    self.twitterUsername = infoData.twitterUsername
     //                    self.publicGists = infoData.publicGists
